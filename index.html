@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Site</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Barra de Login -->
+    <div class="login-container">
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuário" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-content">
+        <h1>Bem-vindo ao Nosso Site!</h1>
+        
+        <!-- Caixa de Informações (aparece após login) -->
+        <div id="infoBox" class="hidden">
+            <div class="whatsapp-logo" onclick="abrirWhatsApp()">
+                <img src="assets/logo-whatsapp.png" alt="WhatsApp">
+            </div>
+            <div class="info-content">
+                <p id="userDescription">Descrição do usuário aqui</p>
+                <p id="userLocation">Localização: São Paulo, SP</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
