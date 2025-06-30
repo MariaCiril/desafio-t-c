@@ -1,37 +1,929 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SabãoSwap - Troca de Sabão Online</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #f5a623;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4f8;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #2c5282);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .hero {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a6fa5" opacity="0.1"/><circle cx="20" cy="20" r="5" fill="%23f5a623" opacity="0.3"/><circle cx="80" cy="80" r="8" fill="%23f5a623" opacity="0.3"/></svg>');
+            padding: 4rem 0;
+            text-align: center;
+            background-size: cover;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--secondary);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5a80;
+        }
+        
+        .section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f0f4f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+        
+        .product-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 2rem;
+            gap: 15px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .filter-section {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1rem;
+        }
+        
+        .filter-group h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background-color: #f0f4f8;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateX(110%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Barra de Login -->
-    <div class="login-container">
-        <form id="loginForm">
-            <input type="text" id="username" placeholder="Usuário" required>
-            <input type="password" id="password" placeholder="Senha" required>
-            <button type="submit">Login</button>
-        </form>
+    <!-- Notificação -->
+    <div class="notification" id="notification">
+        Sabão cadastrado com sucesso!
     </div>
-
-    <!-- Conteúdo Principal -->
-    <div class="main-content">
-        <h1>Bem-vindo ao Nosso Site!</h1>
-        
-        <!-- Caixa de Informações (aparece após login) -->
-        <div id="infoBox" class="hidden">
-            <div class="whatsapp-logo" onclick="abrirWhatsApp()">
-                <img src="assets/logo-whatsapp.png" alt="WhatsApp">
-            </div>
-            <div class="info-content">
-                <p id="userDescription">Descrição do usuário aqui</p>
-                <p id="userLocation">Localização: São Paulo, SP</p>
+    
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">🧼</div>
+                    <h1>SabãoSwap</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="home">Início</a></li>
+                        <li><a href="#" class="nav-link" data-page="products">Sabões</a></li>
+                        <li><a href="#" class="nav-link" data-page="add">Cadastrar Sabão</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
-    </div>
+    </header>
 
-    <script src="script.js"></script>
+    <!-- Página Inicial -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <h2>Troque sabões que você não usa por outros que precisa!</h2>
+                <p>Conectamos pessoas que têm sabões em excesso com quem precisa deles. Economize dinheiro e evite desperdícios!</p>
+                <a href="#" class="btn nav-link" data-page="products">Ver Sabões Disponíveis</a>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Como Funciona</h2>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Cadastre Seus Sabões</h3>
+                        <p>Registre os sabões que você tem disponíveis para troca com fotos e detalhes</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Encontre Ofertas</h3>
+                        <p>Busque sabões que você precisa filtrando por tipo, marca e localização</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3>Faça a Troca</h3>
+                        <p>Combine a troca diretamente com outros usuários de forma segura</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Produtos -->
+    <section id="products" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sabões Disponíveis para Troca</h2>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar sabões...">
+                    <button class="btn" id="searchBtn">Buscar</button>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="grid-2">
+                        <div class="filter-group">
+                            <h4>Tipo de Sabão</h4>
+                            <div class="filter-options">
+                                <button class="filter-btn" data-filter="type" data-value="all">Todos</button>
+                                <button class="filter-btn" data-filter="type" data-value="barra">Barra</button>
+                                <button class="filter-btn" data-filter="type" data-value="liquido">Líquido</button>
+                                <button class="filter-btn" data-filter="type" data-value="po">Pó</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Condição</h4>
+                            <div class="filter-options">
+                                <button class="filter-btn" data-filter="condition" data-value="all">Todos</button>
+                                <button class="filter-btn" data-filter="condition" data-value="novo">Novo</button>
+                                <button class="filter-btn" data-filter="condition" data-value="usado">Usado</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsContainer">
+                    <!-- Produtos serão carregados por JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Cadastro -->
+    <section id="add" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Cadastrar Sabão para Troca</h2>
+                </div>
+                
+                <div class="form-container">
+                    <form id="soapForm">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="soapName">Nome do Sabão</label>
+                                <input type="text" id="soapName" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="soapBrand">Marca</label>
+                                <input type="text" id="soapBrand" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="soapType">Tipo</label>
+                                <select id="soapType" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="barra">Barra</option>
+                                    <option value="liquido">Líquido</option>
+                                    <option value="po">Pó</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="soapCondition">Condição</label>
+                                <select id="soapCondition" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="novo">Novo (Fechado)</option>
+                                    <option value="usado">Usado (Parcialmente usado)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="soapDescription">Descrição</label>
+                            <textarea id="soapDescription" class="form-control" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="soapWeight">Peso/Quantidade</label>
+                                <input type="text" id="soapWeight" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="soapLocation">Localização</label>
+                                <input type="text" id="soapLocation" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="soapImage">Imagem (URL)</label>
+                            <input type="text" id="soapImage" class="form-control" placeholder="Cole a URL de uma imagem">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactInfo">Informações de Contato</label>
+                            <input type="text" id="contactInfo" class="form-control" required placeholder="Email ou telefone">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Cadastrar Sabão</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Sobre -->
+    <section id="about" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sobre o SabãoSwap</h2>
+                </div>
+                
+                <div class="form-container">
+                    <h3>Nossa Missão</h3>
+                    <p>O SabãoSwap nasceu da ideia de reduzir o desperdício de produtos de higiene e limpeza. Muitas vezes temos sabões que não usamos ou que compramos em excesso, enquanto outras pessoas podem estar precisando exatamente desses produtos.</p>
+                    
+                    <h3>Como Tudo Começou</h3>
+                    <p>Em 2023, nossa fundadora, Maria Silva, percebeu que tinha vários sabonetes de hotel que nunca usaria, enquanto sua vizinha estava com dificuldades financeiras para comprar produtos de limpeza. Ela teve a ideia de criar uma plataforma para facilitar esse tipo de troca.</p>
+                    
+                    <h3>Benefícios</h3>
+                    <ul style="padding-left: 20px; margin: 20px 0;">
+                        <li>Redução do desperdício de produtos</li>
+                        <li>Economia de dinheiro para todos os envolvidos</li>
+                        <li>Comunidade sustentável e colaborativa</li>
+                        <li>Ajuda a quem precisa</li>
+                    </ul>
+                    
+                    <h3>Equipe</h3>
+                    <p>Nossa equipe é formada por entusiastas de sustentabilidade, desenvolvedores e designers que acreditam que pequenas ações podem fazer uma grande diferença no mundo.</p>
+                    
+                    <div style="text-align: center; margin-top: 30px;">
+                        <a href="#" class="btn nav-link" data-page="add">Cadastre seu primeiro sabão</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SabãoSwap</h3>
+                    <p>Plataforma de troca de sabões e produtos de higiene. Economize e ajude o planeta!</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="nav-link" data-page="home">Início</a></li>
+                        <li><a href="#" class="nav-link" data-page="products">Sabões</a></li>
+                        <li><a href="#" class="nav-link" data-page="add">Cadastrar</a></li>
+                        <li><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li>Email: contato@sabaoswap.com</li>
+                        <li>Telefone: (11) 99999-9999</li>
+                        <li>Endereço: São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 SabãoSwap. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navegação entre páginas
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remover classe ativa de todos os links
+                document.querySelectorAll('.nav-link').forEach(el => {
+                    el.classList.remove('active');
+                });
+                
+                // Adicionar classe ativa ao link clicado
+                this.classList.add('active');
+                
+                // Esconder todas as páginas
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Mostrar a página correspondente
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+        
+        // Dados de exemplo
+        const soapProducts = [
+            {
+                id: 1,
+                name: "Sabonete Líquido de Lavanda",
+                brand: "Dove",
+                type: "liquido",
+                condition: "novo",
+                description: "Sabonete líquido para mãos, fragrância suave de lavanda. Frasco de 300ml.",
+                weight: "300ml",
+                location: "São Paulo, SP",
+                contact: "maria@email.com",
+                icon: "🧴"
+            },
+            {
+                id: 2,
+                name: "Sabão em Barra Neutro",
+                brand: "Ypê",
+                type: "barra",
+                condition: "usado",
+                description: "Sabão em barra neutro, restam 2 unidades com cerca de 60% cada.",
+                weight: "2 unidades",
+                location: "Rio de Janeiro, RJ",
+                contact: "joao@email.com",
+                icon: "🧼"
+            },
+            {
+                id: 3,
+                name: "Sabão em Pó Omo",
+                brand: "Omo",
+                type: "po",
+                condition: "novo",
+                description: "Sabão em pó para roupas coloridas. Pacote de 1kg fechado.",
+                weight: "1kg",
+                location: "Belo Horizonte, MG",
+                contact: "carla@email.com",
+                icon: "🧺"
+            },
+            {
+                id: 4,
+                name: "Sabonete em Barra de Erva-Doce",
+                brand: "Granado",
+                type: "barra",
+                condition: "novo",
+                description: "Sabonete artesanal de erva-doce. Caixa com 3 unidades fechadas.",
+                weight: "3 unidades",
+                location: "Curitiba, PR",
+                contact: "pedro@email.com",
+                icon: "🧼"
+            }
+        ];
+        
+        // Função para renderizar produtos
+        function renderProducts(products) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Nenhum sabão encontrado com esses critérios.</p>';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <div style="font-size: 4rem;">${product.icon}</div>
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <div class="product-meta">
+                            <span>${product.brand}</span>
+                            <span class="product-price">Para troca</span>
+                        </div>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-meta">
+                            <span>${product.weight}</span>
+                            <span>${product.location}</span>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <button class="btn" style="width: 100%;">Entrar em contato</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(productCard);
+            });
+        }
+        
+        // Inicializar produtos
+        renderProducts(soapProducts);
+        
+        // Filtragem de produtos
+        let currentFilters = {
+            type: 'all',
+            condition: 'all'
+        };
+        
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const filterType = this.getAttribute('data-filter');
+                const filterValue = this.getAttribute('data-value');
+                
+                // Atualizar filtro atual
+                currentFilters[filterType] = filterValue;
+                
+                // Atualizar estado ativo dos botões
+                document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Filtrar produtos
+                const filteredProducts = soapProducts.filter(product => {
+                    const typeMatch = currentFilters.type === 'all' || product.type === currentFilters.type;
+                    const conditionMatch = currentFilters.condition === 'all' || product.condition === currentFilters.condition;
+                    return typeMatch && conditionMatch;
+                });
+                
+                renderProducts(filteredProducts);
+            });
+        });
+        
+        // Busca de produtos
+        document.getElementById('searchBtn').addEventListener('click', searchProducts);
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') searchProducts();
+        });
+        
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (!searchTerm) {
+                renderProducts(soapProducts);
+                return;
+            }
+            
+            const results = soapProducts.filter(product => {
+                return product.name.toLowerCase().includes(searchTerm) || 
+                       product.brand.toLowerCase().includes(searchTerm) ||
+                       product.description.toLowerCase().includes(searchTerm);
+            });
+            
+            renderProducts(results);
+        }
+        
+        // Cadastro de novo sabão
+        document.getElementById('soapForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obter valores do formulário
+            const name = document.getElementById('soapName').value;
+            const brand = document.getElementById('soapBrand').value;
+            const type = document.getElementById('soapType').value;
+            const condition = document.getElementById('soapCondition').value;
+            const description = document.getElementById('soapDescription').value;
+            const weight = document.getElementById('soapWeight').value;
+            const location = document.getElementById('soapLocation').value;
+            const contact = document.getElementById('contactInfo').value;
+            
+            // Determinar ícone com base no tipo
+            let icon = "🧼"; // padrão
+            if (type === "liquido") icon = "🧴";
+            if (type === "po") icon = "🧺";
+            
+            // Criar novo objeto de produto
+            const newProduct = {
+                id: soapProducts.length + 1,
+                name,
+                brand,
+                type,
+                condition,
+                description,
+                weight,
+                location,
+                contact,
+                icon
+            };
+            
+            // Adicionar à lista de produtos
+            soapProducts.unshift(newProduct);
+            
+            // Mostrar notificação
+            const notification = document.getElementById('notification');
+            notification.textContent = "Sabão cadastrado com sucesso!";
+            notification.classList.add('show');
+            
+            // Limpar formulário
+            this.reset();
+            
+            // Esconder notificação após 3 segundos
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+            
+            // Ir para a página de produtos
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.querySelector('[data-page="products"]').classList.add('active');
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById('products').classList.add('active');
+            
+            // Renderizar produtos atualizados
+            renderProducts(soapProducts);
+        });
+    </script>
 </body>
 </html>
