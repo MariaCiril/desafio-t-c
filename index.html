@@ -4,9 +4,576 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EcoSabão - Troca de Sabão Ecológico</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Correção: Inclusão correta do Font Awesome -->
+    <!-- Adicionando Font Awesome para os ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #FFC107;
+            --light: #E8F5E9;
+            --dark: #2E7D32;
+            --accent: #8BC34A;
+            --text: #333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9f5;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(76, 175, 80, 0.8), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1600857062241-98c2aae9d15f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            padding: 5rem 0;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin: 0 auto 2.5rem;
+            max-width: 700px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background-color: var(--secondary);
+            color: #333;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+        
+        .btn-whatsapp i {
+            font-size: 1.3rem;
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 4px solid var(--accent);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1.2rem;
+            color: var(--dark);
+            font-size: 1.5rem;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 220px;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            color: var(--primary);
+            padding: 20px;
+        }
+        
+        .product-info {
+            padding: 1.8rem;
+        }
+        
+        .product-info h3 {
+            color: var(--dark);
+            margin-bottom: 0.8rem;
+            font-size: 1.4rem;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .product-meta i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .product-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .product-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        
+        .search-bar {
+            display: flex;
+            margin-bottom: 2.5rem;
+            gap: 15px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .filter-section {
+            background-color: white;
+            padding: 1.8rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 2.5rem;
+        }
+        
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-group h4 {
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .filter-btn {
+            padding: 10px 18px;
+            background-color: var(--light);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: #e9f5e9;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 18px 25px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateX(110%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .notification i {
+            font-size: 1.5rem;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--dark), #1B5E20);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.8rem;
+            position: relative;
+            padding-bottom: 12px;
+            font-size: 1.5rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links i {
+            width: 20px;
+            color: var(--secondary);
+        }
+        
+        .footer-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+        }
+        
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            z-index: 99;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Botão flutuante do WhatsApp -->
@@ -40,17 +607,517 @@
         </div>
     </header>
 
-    <!-- Conteúdo das páginas (mantido igual) -->
-    ...
+    <!-- Página Inicial -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Troca de Sabão Ecológico Artesanal</h2>
+                    <p>Conectamos fabricantes de sabão ecológico com pessoas que valorizam produtos sustentáveis. Economize, ajude o planeta e promova a economia local!</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary nav-link" data-page="products"><i class="fas fa-soap"></i> Ver Sabões</a>
+                        <a href="#" class="btn nav-link" data-page="add"><i class="fas fa-user-plus"></i> Cadastrar-se</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Como Funciona</h2>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-user-check"></i></div>
+                        <h3>Cadastro do Fabricante</h3>
+                        <p>Fabricantes de sabão ecológico se cadastram com seus dados e informações de contato</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-soap"></i></div>
+                        <h3>Adicione Seus Produtos</h3>
+                        <p>Cadastre seus sabões artesanais com descrição, ingredientes e modo de produção</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h3>Defina Sua Localização</h3>
+                        <p>Informe sua localização para que clientes próximos possam encontrar você</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h3>Contato Direto via WhatsApp</h3>
+                        <p>Clientes entram em contato diretamente pelo WhatsApp para combinar trocas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Produtos -->
+    <section id="products" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sabões Ecológicos Disponíveis</h2>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Buscar sabões por nome, ingrediente ou fabricante...">
+                    <button class="btn btn-primary" id="searchBtn"><i class="fas fa-search"></i> Buscar</button>
+                </div>
+                
+                <div class="filter-section">
+                    <div class="grid-2">
+                        <div class="filter-group">
+                            <h4>Tipo de Sabão</h4>
+                            <div class="filter-options">
+                                <button class="filter-btn" data-filter="type" data-value="all"><i class="fas fa-check-circle"></i> Todos</button>
+                                <button class="filter-btn" data-filter="type" data-value="barra">Barra</button>
+                                <button class="filter-btn" data-filter="type" data-value="liquido">Líquido</button>
+                                <button class="filter-btn" data-filter="type" data-value="especial">Especial</button>
+                            </div>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <h4>Ingredientes</h4>
+                            <div class="filter-options">
+                                <button class="filter-btn" data-filter="ingredient" data-value="all"><i class="fas fa-check-circle"></i> Todos</button>
+                                <button class="filter-btn" data-filter="ingredient" data-value="oleo">Óleo Reciclado</button>
+                                <button class="filter-btn" data-filter="ingredient" data-value="ervas">Ervas Naturais</button>
+                                <button class="filter-btn" data-filter="ingredient" data-value="argila">Argila</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="products-grid" id="productsContainer">
+                    <!-- Produtos serão carregados por JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página de Cadastro -->
+    <section id="add" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Cadastro de Fabricante</h2>
+                    <p>Cadastre-se como fabricante de sabão ecológico para começar a trocar seus produtos</p>
+                </div>
+                
+                <div class="form-container">
+                    <form id="makerForm">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="makerName"><i class="fas fa-user"></i> Nome Completo</label>
+                                <input type="text" id="makerName" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="makerBusiness"><i class="fas fa-store"></i> Nome do Empreendimento (se houver)</label>
+                                <input type="text" id="makerBusiness" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="makerEmail"><i class="fas fa-envelope"></i> Email</label>
+                                <input type="email" id="makerEmail" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="makerPhone"><i class="fas fa-phone"></i> Telefone</label>
+                                <input type="tel" id="makerPhone" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="makerWhatsApp"><i class="fab fa-whatsapp"></i> Link do WhatsApp</label>
+                            <input type="url" id="makerWhatsApp" class="form-control" required placeholder="https://wa.me/5511999999999">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="makerAddress"><i class="fas fa-map-marker-alt"></i> Endereço Completo</label>
+                            <input type="text" id="makerAddress" class="form-control" required>
+                        </div>
+                        
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label for="makerCity"><i class="fas fa-city"></i> Cidade</label>
+                                <input type="text" id="makerCity" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="makerState"><i class="fas fa-globe-americas"></i> Estado</label>
+                                <select id="makerState" class="form-control" required>
+                                    <option value="">Selecione...</option>
+                                    <option value="SP">São Paulo</option>
+                                    <option value="RJ">Rio de Janeiro</option>
+                                    <option value="MG">Minas Gerais</option>
+                                    <option value="RS">Rio Grande do Sul</option>
+                                    <option value="PR">Paraná</option>
+                                    <option value="SC">Santa Catarina</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="makerBio"><i class="fas fa-book"></i> Sobre Você e Seu Trabalho</label>
+                            <textarea id="makerBio" class="form-control" rows="4" required placeholder="Conte sobre sua experiência com sabão ecológico, sua filosofia de produção, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="makerPhoto"><i class="fas fa-camera"></i> Foto (URL)</label>
+                            <input type="text" id="makerPhoto" class="form-control" placeholder="Cole a URL de uma foto sua ou do seu negócio">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Finalizar Cadastro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Página Sobre -->
+    <section id="about" class="page">
+        <div class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sobre o EcoSabão</h2>
+                    <p>Conectando fabricantes de sabão ecológico com consumidores conscientes</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="about-content">
+                        <h3><i class="fas fa-leaf"></i> Nossa Missão</h3>
+                        <p>O EcoSabão foi criado para promover a economia circular e o consumo sustentável. Queremos conectar artesãos que produzem sabão ecológico com pessoas que buscam alternativas sustentáveis para produtos de higiene.</p>
+                        
+                        <h3><i class="fas fa-recycle"></i> Sustentabilidade</h3>
+                        <p>Sabões ecológicos são produzidos com ingredientes naturais, muitas vezes utilizando óleo de cozinha reciclado, evitando que este resíduo contamine o meio ambiente. Além disso, a produção artesanal gera menos poluição e consome menos energia que a produção industrial.</p>
+                        
+                        <h3><i class="fas fa-hands-helping"></i> Economia Local</h3>
+                        <p>Ao conectar fabricantes locais com consumidores da mesma região, promovemos a economia local, reduzimos a pegada de carbono do transporte e fortalecemos comunidades sustentáveis.</p>
+                        
+                        <div class="map-container">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Localização dos nossos fabricantes cadastrados</span>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 40px;">
+                            <a href="#" class="btn btn-primary nav-link" data-page="add"><i class="fas fa-user-plus"></i> Cadastre-se como Fabricante</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Rodapé -->
     <footer>
         <div class="container">
-            <!-- Conteúdo do footer mantido -->
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>EcoSabão</h3>
+                    <p>Plataforma de troca de sabões ecológicos. Conectamos fabricantes sustentáveis com consumidores conscientes.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-chevron-right"></i><a href="#" class="nav-link" data-page="home">Início</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#" class="nav-link" data-page="products">Sabões</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#" class="nav-link" data-page="add">Cadastrar</a></li>
+                        <li><i class="fas fa-chevron-right"></i><a href="#" class="nav-link" data-page="about">Sobre</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contato</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> contato@ecosabao.com</li>
+                        <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                        <li><i class="fab fa-whatsapp"></i> (11) 98888-8888</li>
+                        <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 EcoSabão. Todos os direitos reservados. | Desenvolvido com <i class="fas fa-heart" style="color: #ff6b6b;"></i> para um mundo mais sustentável
+            </div>
         </div>
-    </footer> <!-- TAG DE FECHAMENTO ADICIONADA -->
+    </footer>
 
-    <!-- Correção: Inclusão correta do JavaScript -->
-    <script src="script.js" defer></script>
+    <script>
+        // Aguardar o carregamento completo do DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Função para trocar de página
+            function showPage(pageId) {
+                // Esconde todas as páginas
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Mostra a página solicitada
+                document.getElementById(pageId).classList.add('active');
+                
+                // Atualiza menu ativo
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                document.querySelector(`.nav-link[data-page="${pageId}"]`).classList.add('active');
+                
+                // Rolar para o topo
+                window.scrollTo(0, 0);
+            }
+            
+            // Event listeners para os links de navegação
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            });
+            
+            // Dados de exemplo de fabricantes e produtos
+            const soapMakers = [
+                {
+                    id: 1,
+                    name: "Ana Silva",
+                    business: "Saboaria Ecológica Ana",
+                    email: "ana@email.com",
+                    phone: "(11) 99999-8888",
+                    whatsapp: "https://wa.me/5511999998888",
+                    address: "Rua das Flores, 123 - Jardim Botânico",
+                    city: "São Paulo",
+                    state: "SP",
+                    bio: "Produzo sabões ecológicos há 5 anos, utilizando óleo reciclado e ingredientes naturais. Meu foco é criar produtos que respeitam a pele e o meio ambiente.",
+                    photo: ""
+                },
+                {
+                    id: 2,
+                    name: "Carlos Mendes",
+                    business: "EcoSabões Artesanais",
+                    email: "carlos@email.com",
+                    phone: "(21) 98888-7777",
+                    whatsapp: "https://wa.me/5521988887777",
+                    address: "Av. Beira Mar, 456 - Copacabana",
+                    city: "Rio de Janeiro",
+                    state: "RJ",
+                    bio: "Artista plástico que encontrou na produção de sabões ecológicos uma forma de unir arte e sustentabilidade. Meus sabões são verdadeiras obras de arte funcionais!",
+                    photo: ""
+                }
+            ];
+            
+            const soapProducts = [
+                {
+                    id: 1,
+                    makerId: 1,
+                    name: "Sabão em pedra",
+                    type: "barra",
+                    icon: "🧼",
+                    description: "Sabão artesanal feito com óleo reciclado, essência de lavanda e argila branca. Ideal para roupas delicadas.",
+                    location: "São Paulo, SP",
+                    ingredients: ["oleo", "ervas"]
+                },
+                {
+                    id: 2,
+                    makerId: 1,
+                    name: "Sabão Líquido Multiuso",
+                    type: "liquido",
+                    icon: "🧴",
+                    description: "Detergente ecológico concentrado com óleo reciclado e bicarbonato de sódio. Limpa sem agredir o meio ambiente.",
+                    location: "São Paulo, SP",
+                    ingredients: ["oleo"]
+                },
+                {
+                    id: 3,
+                    makerId: 2,
+                    name: "Sabão Facial de Argila",
+                    type: "especial",
+                    icon: "🧖‍♀️",
+                    description: "Sabonete facial artesanal com argila verde e óleos essenciais. Controla oleosidade e limpa profundamente.",
+                    location: "Rio de Janeiro, RJ",
+                    ingredients: ["argila", "ervas"]
+                },
+                {
+                    id: 4,
+                    makerId: 2,
+                    name: "Sabão de Ervas Medicinais",
+                    type: "barra",
+                    icon: "🌿",
+                    description: "Sabão terapêutico com calêndula, camomila e alecrim. Hidrata e acalma a pele sensível.",
+                    location: "Rio de Janeiro, RJ",
+                    ingredients: ["ervas"]
+                }
+            ];
+            
+            // Função para encontrar fabricante por ID
+            function findMakerById(id) {
+                return soapMakers.find(maker => maker.id === id);
+            }
+            
+            // Função para renderizar produtos
+            function renderProducts(products) {
+                const container = document.getElementById('productsContainer');
+                container.innerHTML = '';
+                
+                if (products.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 40px; font-size: 1.2rem;">Nenhum sabão encontrado com esses critérios.</p>';
+                    return;
+                }
+                
+                products.forEach(product => {
+                    const maker = findMakerById(product.makerId);
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                        <div class="product-image">
+                            <div>${product.icon}</div>
+                        </div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <div class="product-meta">
+                                <span><i class="fas fa-user"></i> ${maker.business || maker.name}</span>
+                                <span><i class="fas fa-tag"></i> ${product.type.charAt(0).toUpperCase() + product.type.slice(1)}</span>
+                            </div>
+                            <p class="product-description">${product.description}</p>
+                            <div class="product-location">
+                                <i class="fas fa-map-marker-alt"></i> ${product.location}
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <a href="${maker.whatsapp}" class="btn btn-whatsapp" target="_blank">
+                                    <i class="fab fa-whatsapp"></i> Contato via WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(productCard);
+                });
+            }
+            
+            // Inicializar produtos
+            renderProducts(soapProducts);
+            
+            // Filtragem de produtos
+            let currentFilters = {
+                type: 'all',
+                ingredient: 'all'
+            };
+            
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterType = this.getAttribute('data-filter');
+                    const filterValue = this.getAttribute('data-value');
+                    
+                    // Atualizar filtro atual
+                    currentFilters[filterType] = filterValue;
+                    
+                    // Atualizar estado ativo dos botões
+                    document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Filtrar produtos
+                    const filteredProducts = soapProducts.filter(product => {
+                        const typeMatch = currentFilters.type === 'all' || product.type === currentFilters.type;
+                        const ingredientMatch = currentFilters.ingredient === 'all' || 
+                                             (product.ingredients && product.ingredients.includes(currentFilters.ingredient));
+                        return typeMatch && ingredientMatch;
+                    });
+                    
+                    renderProducts(filteredProducts);
+                });
+            });
+            
+            // Busca de produtos
+            document.getElementById('searchBtn').addEventListener('click', searchProducts);
+            document.getElementById('searchInput').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') searchProducts();
+            });
+            
+            function searchProducts() {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                
+                if (!searchTerm) {
+                    renderProducts(soapProducts);
+                    return;
+                }
+                
+                const results = soapProducts.filter(product => {
+                    const maker = findMakerById(product.makerId);
+                    return product.name.toLowerCase().includes(searchTerm) || 
+                           (product.description && product.description.toLowerCase().includes(searchTerm)) ||
+                           (maker && maker.name.toLowerCase().includes(searchTerm)) ||
+                           (maker && maker.business && maker.business.toLowerCase().includes(searchTerm));
+                });
+                
+                renderProducts(results);
+            }
+            
+            // Cadastro de novo fabricante
+            document.getElementById('makerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Obter valores do formulário
+                const name = document.getElementById('makerName').value;
+                const business = document.getElementById('makerBusiness').value;
+                const email = document.getElementById('makerEmail').value;
+                const phone = document.getElementById('makerPhone').value;
+                const whatsapp = document.getElementById('makerWhatsApp').value;
+                const address = document.getElementById('makerAddress').value;
+                const city = document.getElementById('makerCity').value;
+                const state = document.getElementById('makerState').value;
+                const bio = document.getElementById('makerBio').value;
+                const photo = document.getElementById('makerPhoto').value;
+                
+                // Criar novo objeto de fabricante
+                const newMaker = {
+                    id: soapMakers.length + 1,
+                    name,
+                    business,
+                    email,
+                    phone,
+                    whatsapp,
+                    address,
+                    city,
+                    state,
+                    bio,
+                    photo
+                };
+                
+                // Adicionar à lista de fabricantes
+                soapMakers.push(newMaker);
+                
+                // Mostrar notificação
+                const notification = document.getElementById('notification');
+                notification.classList.add('show');
+                
+                // Limpar formulário
+                this.reset();
+                
+                // Esconder notificação após 3 segundos
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+                
+                // Ir para a página de produtos
+                showPage('products');
+            });
+        });
+    </script>
 </body>
 </html>
